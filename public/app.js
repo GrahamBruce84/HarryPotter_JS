@@ -14,31 +14,38 @@ var requestComplete = function(){
   if(this.status !== 200) return;
   var jsonString = this.responseText;
   var characters = JSON.parse(jsonString);
- barChart(characters);
+  var houses = characterByHouse(characters);
+  barChart(houses);
 };
 
 var characterByHouse = function(characters){
   var Gryffindor = 0;
   var Slytherin = 0;
-  var HufflePuff = 0;
+  var Hufflepuff = 0;
   var Ravenclaw = 0;
   characters.forEach(function(character){
     if(character.house === "Gryffindor"){
-      return Gryffindor++;
+      Gryffindor++;
     }
     if (character.house === "Slytherin"){
-      return Slytherin++;
+      Slytherin++;
     }
     if(character.house === "Hufflepuff"){
-      return HufflePuff++;
+      Hufflepuff++;
     }
     if(character.house === "Ravenclaw"){
-      return Ravenclaw++;
+      Ravenclaw++;
     }
-  })
+  });
+  var houses = [];
+  houses.push(Gryffindor);
+  houses.push(Slytherin);
+  houses.push(Hufflepuff);
+  houses.push(Ravenclaw);
+  return houses;
 }
 
-var barChart = function(){
+var barChart = function(houses){
   var container = document.getElementById('bar-chart');
   var chart = new Highcharts.Chart({
     chart:{
@@ -49,37 +56,77 @@ var barChart = function(){
       text: "Harry Potter characters"
     },
     plotOptions: {
-      column: {
-        colorByPoint: true,
+      series: {
+        cursor: 'pointer',
+        point: {
+          events: {
+            click: function () {
+              getCharacterDetails();
+            }
+          }
+        }
       }
     },
     series: [{
+      name: 'Houses',
       fillOpacity: 0,
-     data: [{
+      data: [{
        name: 'Gryffindor',
-       color: 'red',
-       y: characterByHouse.Gryffindor
+       color: {
+        linearGradient: {
+          x1: 0, x2: 0, y1: 0, y2: 1
+        },
+        stops: [
+        [0, 'gold'],
+        [1, '#7a030d']
+        ]
+       },
+       y: houses[0]
      }, 
      {
        name: 'Slytherin',
-       color: 'green',
-       y: characterByHouse.Slytherin
+       color: {
+        linearGradient: {
+          x1: 0, x2: 0, y1: 0, y2: 1
+        },
+        stops: [
+        [0, '#c1c6c0'],
+        [1, '#086603']
+        ]
+       },
+       y: houses[1]
      },
      {
       name: 'Hufflepuff',
-      color: 'yellow',
-      y: characterByHouse.HufflePuff
-     },
-     {
+      color: {
+        linearGradient: {
+          x1: 0, x2: 0, y1: 0, y2: 1
+        },
+        stops: [
+        [0, 'black'],
+        [1, '#E9BF00']
+        ]
+       },
+      y: houses[2]
+    },
+    {
       name: 'Ravenclaw',
-      color: 'blue',
-      y: characterByHouse.Ravenclaw
-     }]
-   }],
-   xAxis:{
-    categories: ['Gryffindor', 'Hufflepuff', 'Slytherin', 'Ravenclaw']
+      color: {
+        linearGradient: {
+          x1: 0, x2: 0, y1: 0, y2: 1
+        },
+        stops: [
+        [0, '#cd7f32'],
+        [1, 'blue']
+        ]
+       },
+      y: houses[3]
+    }]
+  }],
+  xAxis:{
+    categories: ['Gryffindor', 'Slytherin', 'Hufflepuff', 'Ravenclaw']
   },
-  Yaxis:{
+  yAxis:{
     title: {
       text: "Number of characters"
     }
@@ -87,6 +134,23 @@ var barChart = function(){
 })
 }
 
+var getCharacterDetails = function(characters){
+ var ul = document.getElementById('character-list');
+ characters.forEach(function(char){
+  var header = document.createElement('h2');
+  header.textContent = "Characters of " + char.house;
+})
+ ul.appendChild(header);
+ var name = document.createElement('li');
+ name.innerText = char.name;
+ ul.appendChild(name);
+ var ancestry = document.createElement('li');
+ ancestry.innerText = char.ancestry;
+ ul.appendChild(ancestry);
+ var wand = document.createElement('li');
+ wand.innerText = char.wand;
+ ul.appendChild(wand);
+}
 window.addEventListener('load', app);
 
 

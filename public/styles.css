@@ -4,3 +4,6 @@ body{
   background-attachment: fixed;
 }
 
+.highcharts-area{
+  opacity: 0;
+}
