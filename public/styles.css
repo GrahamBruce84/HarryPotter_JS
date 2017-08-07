@@ -1,9 +1,5 @@
-body{
-  background-image: url("http://diysolarpanelsv.com/images/hogwarts-castle-silhouette-clipart-7.jpg");
+html{
+  background-image: url("http://az616578.vo.msecnd.net/files/2016/01/10/635880024881231482-1152951101_hogwarts.jpg");
   background-size: cover; 
-  background-attachment: fixed;
 }
-
-.highcharts-area{
-  opacity: 0;
-}
+ 

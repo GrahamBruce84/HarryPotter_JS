@@ -50,7 +50,8 @@ var barChart = function(houses){
   var chart = new Highcharts.Chart({
     chart:{
       type: 'column',
-      renderTo: container
+      renderTo: container,
+      backgroundColor: 'transparent'
     },
     title: {
       text: "Harry Potter characters"
